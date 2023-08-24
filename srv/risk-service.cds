@@ -1,5 +1,6 @@
 using { riskmanagement as rm } from '../db/schema';
-   
+
+@impl: 'srv/index.js'
 @path: 'service/risk'
 
 service RiskService {
