@@ -23,8 +23,9 @@ export class RiskService extends cds.ApplicationService {
             return result;
         });
         
-        this.after("*", (res, req) => {
-            _logReqInfo(req, "after");
+        this.after("READ", "Risks", (res, req) => {
+            const arr = Array.isArray(res) ? res : [res];
+            arr.forEach(risk => risk.criticality = (risk.impact > 10000 ? 1 : 2));
         });
 
         this.on("error", (err, req) => {
