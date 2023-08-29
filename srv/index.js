@@ -27,6 +27,12 @@ export class RiskService extends cds.ApplicationService {
             _logReqInfo(req, "after");
         });
 
+        this.on("error", (err, req) => {
+            if (err.code == "404") {
+                err.message = `[${req.method}]: Can't find ${req.target.name} with specified id: ${req.data.ID}`;
+            }
+        });
+
         return super.init();
     }
 }
