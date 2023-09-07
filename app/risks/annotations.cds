@@ -21,6 +21,9 @@ annotate srv.Risks with @(UI: {
             {
                 Value: owner
             },
+            {
+                Value: bp_BusinessPartner
+            },
             { 
                 Value: prio,
                 Criticality: criticality
@@ -58,6 +61,9 @@ annotate srv.Risks with @(UI: {
         },
         {
             Value: owner
+        },
+        {
+            Value: bp_BusinessPartner
         },
         {
             Value: prio,
