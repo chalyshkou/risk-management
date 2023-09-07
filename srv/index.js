@@ -7,6 +7,10 @@ export class RiskService extends cds.ApplicationService {
         this.on("READ", "BusinessPartners", (req, next) => {
             return this._readBusinessPartners(req, next, BPService);
         });
+
+        this.on("READ", "Risks", async (req, next) => {
+            return this._handleRisksRead(req, next, BPService);
+        });
         
         this.after("READ", "Risks", (res, req) => {
             return this._calculateRisksCriticality(res, req);
@@ -28,6 +32,68 @@ export class RiskService extends cds.ApplicationService {
                 APIKey: process.env.apikey
             }
         });
+    }
+
+    async _handleRisksRead(req, next, service) {
+        if (!this._columns(req)) {
+            return next();
+        }
+
+        const expandIndex = this._isPartnersToExpand(req);
+
+        if (expandIndex < 0) {
+            return next();
+        }
+
+        this._columns(req).splice(expandIndex, 1);
+
+        if (!this._isReferenceToBP(req)) {
+            this._addReferenceToBP(req);
+        }
+
+        await this._tryToExpandBP(req, next, service);
+    }
+
+    _isPartnersToExpand(req) {
+        return this._columns(req).findIndex(({expand, ref}) => expand && ref[0] === "bp");
+    }
+
+    _isReferenceToBP(req) {
+        return this._columns(req).find(column => {
+            return column.ref.find(ref => ref == "bp_BusinessPartner")
+        });
+    }
+
+    _addReferenceToBP(req) {
+        this._columns(req).push({ ref: ["bp_BusinessPartner"]});
+    }
+
+    async _tryToExpandBP(req, next, service) {
+        try {
+            const risks = this._castToArray(await next());
+
+            return await Promise.all(risks.map(async risk => {
+                risk.bp = await this._loadBusinesPartnerByRisk(req, service, risk);
+                return risk;
+            }));
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    _loadBusinesPartnerByRisk(req, service, risk) {
+        return service.transaction(req).send({
+            query: SELECT.one(this.entities.BusinessPartners)
+                .where({BusinessPartner: risk.bp_BusinessPartner })
+                .columns(["BusinessPartner", "LastName", "FirstName"]),
+            headers: {
+                APIKey: process.env.apikey
+            }
+        });
+    }
+
+    _columns(req) {
+        return req.query.SELECT.columns; 
     }
 
     _castToArray(value) {
