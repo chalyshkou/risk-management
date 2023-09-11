@@ -11,7 +11,9 @@
     "@sap-cloud-sdk/resilience": "^3.4.0",
     "@sap/cds": "^7",
     "express": "^4",
-    "@sap/cds-hana": "^2"
+    "@sap/cds-hana": "^2",
+    "@sap/xssec": "^3",
+    "passport": "^0"
   },
   "devDependencies": {
     "@cap-js/sqlite": "^1",
@@ -34,7 +36,8 @@
         }
       },
       "[production]": {
-        "db": "hana"
+        "db": "hana",
+        "auth": "xsuaa"
       }
     }
   }
