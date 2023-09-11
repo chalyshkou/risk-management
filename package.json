@@ -23,6 +23,7 @@
   "scripts": {
     "start": "cds-serve",
     "build": "mbt build -t gen --mtar mta.tar",
+    "deploy": "cf deploy gen/mta.tar",
     "watch-risks": "cds watch --open risks/webapp/index.html?sap-ui-xx-viewCache=false"
   },
   "sapux": [
