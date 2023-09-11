@@ -42,13 +42,8 @@ modules:
       disk-quota: 256M
       memory: 256M
     requires:
-      - name: srv-api
-        group: destinations
-        properties:
-          name: srv-api # must be used in xs-app.json as well
-          url: ~{srv-url}
-          forwardAuthToken: true
       - name: risk-management-auth
+      - name: risk-management-destination
 
 resources:
   - name: risk-management-auth
