@@ -22,6 +22,7 @@
   },
   "scripts": {
     "start": "cds-serve",
+    "hybrid": "cds watch --profile hybrid",
     "build": "mbt build -t gen --mtar mta.tar",
     "deploy": "cf deploy gen/mta.tar",
     "watch-risks": "cds watch --open risks/webapp/index.html?sap-ui-xx-viewCache=false"
@@ -31,16 +32,37 @@
   ],
   "cds": {
     "requires": {
-      "API_BUSINESS_PARTNER": {
-        "kind": "odata",
-        "model": "srv/external/API_BUSINESS_PARTNER",
-        "credentials": {
-          "url": "https://sandbox.api.sap.com/s4hanacloud/sap/opu/odata/sap/API_BUSINESS_PARTNER"
+      "[development]": {
+        "API_BUSINESS_PARTNER": {
+          "kind": "odata",
+          "model": "srv/external/API_BUSINESS_PARTNER"
         }
       },
       "[production]": {
         "db": "hana",
         "auth": "xsuaa"
+      },
+      "[hybrid]": {
+        "destinations": {
+          "binding": {
+            "type": "cf",
+            "apiEndpoint": "https://api.cf.us10-001.hana.ondemand.com",
+            "org": "19e99199trial_trial-cbpcnhvx",
+            "space": "dev",
+            "instance": "risk-management-destination",
+            "key": "dest-sk",
+            "resolved": false
+          },
+          "kind": "destinations",
+          "vcap": {
+            "name": "destinations"
+          }
+        },
+        "API_BUSINESS_PARTNER": {
+          "credentials": {
+            "destination": "bp"
+          }
+        }
       }
     }
   }
