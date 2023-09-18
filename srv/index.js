@@ -27,10 +27,7 @@ export class RiskService extends cds.ApplicationService {
         req.query.where("LastName <> '' and FirstName <> ''");
 
         return await service.transaction(req).send({
-            query: req.query,
-            headers: {
-                APIKey: process.env.apikey
-            }
+            query: req.query
         });
     }
 
@@ -85,10 +82,7 @@ export class RiskService extends cds.ApplicationService {
         return service.transaction(req).send({
             query: SELECT.one(this.entities.BusinessPartners)
                 .where({BusinessPartner: risk.bp_BusinessPartner })
-                .columns(["BusinessPartner", "LastName", "FirstName"]),
-            headers: {
-                APIKey: process.env.apikey
-            }
+                .columns(["BusinessPartner", "LastName", "FirstName"])
         });
     }
 
