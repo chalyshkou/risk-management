@@ -41,28 +41,6 @@
       "[production]": {
         "db": "hana",
         "auth": "xsuaa"
-      },
-      "[hybrid]": {
-        "destinations": {
-          "binding": {
-            "type": "cf",
-            "apiEndpoint": "https://api.cf.us10-001.hana.ondemand.com",
-            "org": "19e99199trial_trial-cbpcnhvx",
-            "space": "dev",
-            "instance": "risk-management-destination",
-            "key": "dest-sk",
-            "resolved": false
-          },
-          "kind": "destinations",
-          "vcap": {
-            "name": "destinations"
-          }
-        },
-        "API_BUSINESS_PARTNER": {
-          "credentials": {
-            "destination": "bp"
-          }
-        }
       }
     }
   }
