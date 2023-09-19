@@ -40,7 +40,14 @@
       },
       "[production]": {
         "db": "hana",
-        "auth": "xsuaa"
+        "auth": "xsuaa",
+        "API_BUSINESS_PARTNER": {
+          "kind": "odata",
+          "model": "srv/external/API_BUSINESS_PARTNER",
+          "credentials": {
+            "destination": "bp"
+          }
+        }
       }
     }
   }
