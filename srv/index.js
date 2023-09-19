@@ -70,7 +70,7 @@ export class RiskService extends cds.ApplicationService {
             const risks = this._castToArray(await next());
 
             return await Promise.all(risks.map(async risk => {
-                risk.bp = await this._loadBusinesPartnerByRisk(req, service, risk);
+                risk.bp = await this._loadBusinessPartnerByRisk(req, service, risk);
                 return risk;
             }));
         } catch (err) {
@@ -78,7 +78,7 @@ export class RiskService extends cds.ApplicationService {
         }
     }
 
-    _loadBusinesPartnerByRisk(req, service, risk) {
+    _loadBusinessPartnerByRisk(req, service, risk) {
         return service.transaction(req).send({
             query: SELECT.one(this.entities.BusinessPartners)
                 .where({BusinessPartner: risk.bp_BusinessPartner })
