@@ -10,6 +10,11 @@
       "source": "^/odata/(.*)$",
       "destination": "odata",
       "target": "/$1"
+    },
+    {
+      "source": "^/json-placeholder/(.*)$",
+      "destination": "json-placeholder",
+      "target": "/$1"
     }
   ]
 }
