@@ -1,0 +1,18 @@
+_schema-version: '3.1'
+ID: risk-management.destination-extension
+extends: risk-management
+
+resources:
+  - name: risk-management-destination
+    parameters:
+      config:
+        init_data:
+          instance:
+            destinations:
+              - Name: json-placeholder
+                URL: 'https://jsonplaceholder.typicode.com/'
+                Authentication: NoAuthentication
+                Type: HTTP
+                ProxyType: Internet
+                HTML5.ForwardAuthToken: true
+                HTML5.DynamicDestination: true
