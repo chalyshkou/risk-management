@@ -49,11 +49,27 @@ annotate srv.Risks with @(UI: {
         }
     },
 
-    Facets: [{
-        $Type: 'UI.ReferenceFacet',
-        Label: 'Main',
-        Target: '@UI.FieldGroup#Main',
-    }],
+    Facets: [
+        {
+            $Type: 'UI.ReferenceFacet',
+            Label: 'Additional',
+            Target: '@UI.FieldGroup#Additional'
+        },
+        {
+            $Type: 'UI.ReferenceFacet',
+            Label: 'Main',
+            Target: '@UI.FieldGroup#Main',
+        }
+    ],
+
+    FieldGroup #Additional: {Data: [
+        {
+            Value: owner
+        },
+        {
+            Value: title
+        }
+    ]},
 
     FieldGroup #Main: {Data: [
         {
